@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEB101 Website</title>
+
+<style>
+/* LIGHT/DARK MODE */
+:root {
+    --bg: #111;
+    --fg: #fff;
+    --header-bg: #000;
+    --footer-bg: #000;
+    --card-bg: #1a1a1a;
+    --list-bg: #222;
+    --border: #444;
+    --hover: #222;
+    --shadow: #00aaff;
+    --profile-bg: #333;
+}
+
+body.light {
+    --bg: #f2f2f2;
+    --fg: #000;
+    --header-bg: #fff;
+    --footer-bg: #fff;
+    --card-bg: #fff;
+    --list-bg: #fff;
+    --border: #bbb;
+    --hover: #eee;
+    --shadow: #00aaff;
+    --profile-bg: #e1e1e1;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    transition: 0.3s;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* HEADER */
+header {
+    background: var(--header-bg);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border);
+}
+header h1 { margin: 0; font-size: 24px; }
+
+/* NAVIGATION */
+nav {
+    display: flex;
+    gap: 15px;
+}
+nav label {
+    color: var(--fg);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+nav label:hover { color: white; }
+
+/* MODE TOGGLE */
+#modeToggle {
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: var(--list-bg);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    transition: 0.3s;
+}
+#modeToggle:hover { background: var(--hover); }
+
+/* HIDE RADIO INPUTS */
+input[type="radio"], input[type="checkbox"] { display: none; }
+
+/* PAGES */
+.page { display: none; padding: 50px; max-width: 900px; margin: auto; animation: fadeIn 0.6s ease-in-out; }
+#homeRadio:checked ~ .pages #home,
+#aboutRadio:checked ~ .pages #about,
+#membersRadio:checked ~ .pages #members {
+    display: block;
+}
+
+/* HERO SECTION */
+.hero { text-align: center; padding: 50px 20px; animation: slideUp 0.7s ease-in-out; }
+.hero h2 { font-size: 40px; margin-bottom: 10px; }
+.hero p { font-size: 18px; color: #ccc; }
+
+.cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 40px;
+}
+.card {
+    width: 260px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+    animation: fadeIn 0.8s ease-in-out;
+}
+.card:hover {
+    transform: scale(1.07) rotate(1deg);
+    background: var(--hover);
+    box-shadow: 0 0 20px var(--shadow);
+}
+.card img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+
+/* MEMBERS SECTION */
+#members .members-container { display: flex; flex-direction: column; gap: 20px; }
+.profile-box { display: flex; flex-direction: column; gap: 15px; }
+
+/* MEMBER BAR STYLE */
+.member-bar {
+    display: block;
+    background: var(--list-bg);
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+}
+.member-bar:hover { background: var(--hover); }
+
+/* MEMBER INFO (HIDDEN BY DEFAULT) */
+.member-info {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+.member input[type="checkbox"]:checked ~ .member-info {
+    max-height: 500px;
+    opacity: 1;
+}
+
+/* PROFILE CONTAINER INSIDE MEMBER INFO */
+.member-info .profile-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s forwards;
+}
+
+/* ADDING IMAGE SLOT HERE */
+.profile-pic {
+    width: 180px;
+    height: 180px;
+    background: var(--profile-bg);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>WEB101 Website</h1>
+    <label id="modeToggle">
+        <input type="checkbox" onchange="document.body.classList.toggle('light')"> Light Mode
+    </label>
+    <nav>
+        <label for="homeRadio">Home</label>
+        <label for="aboutRadio">About</label>
+        <label for="membersRadio">Members</label>
+    </nav>
+</header>
+
+<!-- PAGE RADIOS -->
+<input type="radio" name="page" id="homeRadio" checked>
+<input type="radio" name="page" id="aboutRadio">
+<input type="radio" name="page" id="membersRadio">
+
+<div class="pages">
+
+<!-- HOME PAGE -->
+<section id="home" class="page">
+    <div class="hero">
+        <h2>Welcome to WEB101</h2>
+        <p>Learn HTML • CSS • Interactivity • Web Design</p>
+        <div class="cards">
+            <div class="card">
+                <img src="pic.jpg">
+                <h3>Learn HTML</h3>
+                <p>Structure your webpage using tags and semantic elements.</p>
+            </div>
+            <div class="card">
+                <img src="wa.jpg" alt="CSS Icon">
+                <h3>Style with CSS</h3>
+                <p>Design beautiful layouts and responsive components.</p>
+            </div>
+            <div class="card">
+                <img src="css.jpg" alt="JS Icon">
+                <h3>Add Interactivity</h3>
+                <p>Bring your website to life using Html.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT PAGE -->
+<section id="about" class="page">
+    <h2>About WEB101</h2>
+    <p>WEB101 introduces students to the fundamentals of HTML, CSS, and basic web design.</p>
+</section>
+
+<!-- MEMBERS PAGE -->
+<section id="members" class="page">
+    <h2>Group Members</h2>
+    <div class="members-container">
+        <div class="profile-box">
+
+            <!-- MEMBER 1 -->
+            <div class="member">
+                <input type="checkbox" id="m1">
+                <label for="m1" class="member-bar">Cristine Joy A. De Guzman</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('tin.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 19</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> Bagong Silang, Caloocan City</p>
+                            <p><strong>Contact:</strong> 09099659738</p>
+                            <p><strong>Hobbies:</strong> Gaming, Drawing</p>
+                            <p><strong>Motto:</strong> Enjoy every moment while it lasts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 2 -->
+            <div class="member">
+                <input type="checkbox" id="m2">
+                <label for="m2" class="member-bar">Joyce D. Balaba</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('joy.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 21</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> Commonwealth, Quezon City</p>
+                            <p><strong>Contact:</strong> 09306791542</p>
+                            <p><strong>Hobbies:</strong> Reading</p>
+                            <p><strong>Motto:</strong> Be the change you want to see.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 3 -->
+            <div class="member">
+                <input type="checkbox" id="m3">
+                <label for="m3" class="member-bar">Bea H. Manalaysay</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('bea.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 19</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> 34c Howmart Rd. Baesa Quezon city</p>
+                            <p><strong>Contact:</strong> 09541930060</p>
+                            <p><strong>Hobbies:</strong> Playing Badminton</p>
+                            <p><strong>Motto:</strong> Ang life parang buhay.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 4 -->
+            <div class="member">
+                <input type="checkbox" id="m4">
+                <label for="m4" class="member-bar">Jameson M. Riño</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('rino.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 20</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> Batasan Hills, Quezon city</p>
+                            <p><strong>Contact:</strong> 09382295075</p>
+                            <p><strong>Hobbies:</strong> Doing nothing</p>
+                            <p><strong>Motto:</strong> Do your best, but maybe not sometimes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 5 -->
+            <div class="member">
+                <input type="checkbox" id="m5">
+                <label for="m5" class="member-bar">Jovaira S. Andagon</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('vayra.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 20</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> Zabarte Rd constellation Home, Caloocan City</p>
+                            <p><strong>Contact:</strong> 09260939839</p>
+                            <p><strong>Hobbies:</strong> Editing</p>
+                            <p><strong>Motto:</strong> The best is yet to come, keep pushing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 6 -->
+            <div class="member">
+                <input type="checkbox" id="m6">
+                <label for="m6" class="member-bar">Dean Angelo A. Ocao</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('dean.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 19</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> San Isidro, Rodriguez, Rizal</p>
+                            <p><strong>Contact:</strong> 09303463873</p>
+                            <p><strong>Hobbies:</strong> Playing online games</p>
+                            <p><strong>Motto:</strong> Life is short, make it shorter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MEMBER 7 -->
+            <div class="member">
+                <input type="checkbox" id="m7">
+                <label for="m7" class="member-bar">John Benedict S. Insilada</label>
+                <div class="member-info">
+                    <div class="profile-container">
+                        <div class="profile-pic" style="background-image:url('insilada.png');"></div>
+                        <div class="profile-details">
+                            <p><strong>Age:</strong> 19</p>
+                            <p><strong>Course:</strong> BSIT</p>
+                            <p><strong>Address:</strong> Commonwealth, Quezon City</p>
+                            <p><strong>Contact:</strong> 09278605357</p>
+                            <p><strong>Hobbies:</strong> Playing badminton, games and sleeping</p>
+                            <p><strong>Motto:</strong> If not now, then ano next?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>© 2025 WEB101 Project</p>
+</footer>
+
+</body>
+</html>
+
+
+
+
